@@ -16,7 +16,4 @@
 
 
 #pragma once
-
-#define OLED_TIMEOUT 120000
-#define OLED_BRIGHTNESS 120
-#define MASTER_RIGHT
+#define SPLIT_USB_DETECT

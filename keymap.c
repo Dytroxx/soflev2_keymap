@@ -21,6 +21,7 @@ enum sofle_layers {
     _QWERTY,
     _LOWER,
     _RAISE,
+    _LOC,
     _ADJUST,
 };
 
@@ -161,6 +162,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                    _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
   )
 };
+
+/* Smart Backspace Delete */
+bool shift_held = false;
+static uint16_t held_shift = 0;
+
+/* keyboard pet jump status variables */
+bool isSneaking = false;
+bool isJumping = false;
+bool showedJump = true;
+
 // clang-format on
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -168,11 +179,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-        case KC_GAMING:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_GAMING);
             }
             return false;
         case KC_LOWER:
@@ -352,8 +358,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (shift_held) {
                     if (record->event.pressed) {
                         if (get_highest_layer(default_layer_state) == _QWERTY) {
-                            set_single_persistent_default_layer(_GAMING);
-                        } else if (get_highest_layer(default_layer_state) == _GAMING) {
+                            set_single_persistent_default_layer(_QWERTY);
+                        } else if (get_highest_layer(default_layer_state) == _QWERTY) {
                             set_single_persistent_default_layer(_QWERTY);
                         }
                     }
